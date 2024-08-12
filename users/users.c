@@ -3,9 +3,10 @@
 #include <crypt.h>
 #include <sqlite3.h>
 #include <string.h>
+#include <ncurses.h>
 #include "db_utils.h"
 
-#define PASSWORD_MAX_LEN 72
+
 
 
 
@@ -41,9 +42,16 @@ int main(int argc, char const *argv[])
         sqlite3_free(err_msg);
         exit(1);
     }
+// Inicializar ncurses
+    initscr();
+    cbreak();
+    keypad(stdscr, TRUE); // Habilitar teclas especiales
 
+    // Mostrar menú principal
     MainMenu(db);
 
+    // Finalizar ncurses
+    endwin();
     sqlite3_close(db);
     return 0;
 }
